@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  branch-name:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      # 브랜치 이름은 PR 작성자가 정하는 값이라 env 로 넘긴다 (셸 주입 방지)
+      # 타입은 commitlint.config.js 와 같다
+      - name: 브랜치 이름 검사
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          if printf '%s' "$BRANCH" | grep -Eq '^(feat|fix|design|refactor|style|perf|test|docs|chore|build|ci|revert)/[a-z0-9-]+$'; then
+            exit 0
+          fi
+          echo "⛔ 브랜치 이름이 규칙과 다릅니다: $BRANCH"
+          echo "   <타입>/<설명> 형식으로 지어 주세요. 예) feat/12-message-write"
+          exit 1
+
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx prettier --check .
+      - run: npm run typecheck
+      - run: npm run build

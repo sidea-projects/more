@@ -9,6 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "npm run build && vite preview",
+    "deploy": "npm run build && wrangler d1 migrations apply DB --remote && wrangler deploy",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "wrangler types && tsc -b",

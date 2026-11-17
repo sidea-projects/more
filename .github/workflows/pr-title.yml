@@ -1,0 +1,33 @@
+name: PR 제목
+
+# Squash merge 하면 PR 제목이 main 커밋 제목이 된다. 커밋 훅은 PR 제목을 못 보니 여기서 검사한다
+# 제목만 고쳐도 다시 돌도록 edited 를 받는다. ci.yml 과 나눈 이유: 제목 수정 때 코드 검사를 다시 돌리지 않게
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      # PR 제목은 작성자가 정하는 값이라 env 로 넘긴다 (셸 주입 방지)
+      # 타입은 commitlint.config.js 와 같다
+      - name: PR 제목 검사
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if printf '%s' "$TITLE" | grep -Eq '^(feat|fix|design|refactor|style|perf|test|docs|chore|build|ci|revert)(\([a-z0-9-]+\))?!?: .+'; then
+            exit 0
+          fi
+          echo "⛔ PR 제목이 규칙과 다릅니다: $TITLE"
+          echo "   <타입>: <제목> 형식으로 써 주세요. 예) feat: 메시지 작성 화면 추가"
+          exit 1

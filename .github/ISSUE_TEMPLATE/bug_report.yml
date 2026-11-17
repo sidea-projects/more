@@ -1,0 +1,41 @@
+name: Bug report
+description: 화면이나 기능이 의도와 다르게 동작할 때
+title: 'fix: '
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 현상
+      description: 무엇이 이상한지 본 그대로 적어 주세요
+      placeholder: ex) '보내기' 버튼을 눌러도 아무 변화가 없다
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      description: 이 순서대로 하면 같은 문제가 생기게 적어 주세요
+      placeholder: |
+        1. 메인 화면에서 '메시지 쓰기' 클릭
+        2. 내용 입력 후 '보내기' 클릭
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 원래 되어야 하는 모습
+      placeholder: ex) 전송 완료 화면으로 넘어간다
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 어디서 생겼나요?
+      options:
+        - PC
+        - 모바일
+        - 둘 다
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 스크린샷·화면 녹화
+      description: 이미지나 영상을 여기로 끌어다 놓으면 첨부돼요

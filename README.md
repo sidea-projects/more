@@ -16,10 +16,11 @@ npm install
 npm run dev
 ```
 
-| 명령                | 설명                        |
-| ------------------- | --------------------------- |
-| `npm run build`     | 빌드                        |
-| `npm run preview`   | 빌드 결과를 로컬에서 실행   |
-| `npm run typecheck` | `Env` 타입 생성 + 타입 검사 |
-| `npm run lint`      | ESLint                      |
-| `npm run format`    | Prettier                    |
+| 명령                | 설명                          |
+| ------------------- | ----------------------------- |
+| `npm run build`     | 빌드                          |
+| `npm run preview`   | 빌드 결과를 로컬에서 실행     |
+| `npm run deploy`    | 빌드 + DB 마이그레이션 + 배포 |
+| `npm run typecheck` | `Env` 타입 생성 + 타입 검사   |
+| `npm run lint`      | ESLint                        |
+| `npm run format`    | Prettier                      |

@@ -1,0 +1,12 @@
+language: ko-KR
+reviews:
+  profile: chill
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - '!package-lock.json'
+  path_instructions:
+    - path: 'migrations/**'
+      instructions: '이미 있는 마이그레이션 파일을 수정했는지 확인한다. 변경은 새 파일로 추가해야 한다. DROP TABLE, 컬럼 삭제처럼 데이터가 사라지는 SQL 은 반드시 지적한다.'
