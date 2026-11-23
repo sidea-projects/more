@@ -25,7 +25,7 @@ jobs:
         env:
           TITLE: ${{ github.event.pull_request.title }}
         run: |
-          if printf '%s' "$TITLE" | grep -Eq '^(feat|fix|design|refactor|style|perf|test|docs|chore|build|ci|revert)(\([a-z0-9-]+\))?!?: .+'; then
+          if printf '%s' "$TITLE" | grep -Eq '^(feat|fix|design|refactor|style|perf|test|docs|chore|build|ci|revert)(\([a-z-]+\))?!?: .+'; then
             exit 0
           fi
           echo "⛔ PR 제목이 규칙과 다릅니다: $TITLE"
